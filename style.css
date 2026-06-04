@@ -1,1 +1,180 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #050505;
+  color: #f5f5f5;
+  padding: 16px;
+}
+
+.app {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.header span {
+  color: #c9a24d;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.header h1 {
+  font-size: 30px;
+  margin-top: 6px;
+}
+
+.card {
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 18px;
+  padding: 18px;
+  margin-bottom: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+}
+
+.card p {
+  color: #aaa;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.card h2 {
+  font-size: 32px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.ganho h3 {
+  color: #29d17d;
+}
+
+.gasto h3 {
+  color: #ff4d4d;
+}
+
+.conta h3 {
+  color: #ffb84d;
+}
+
+.meta h3 {
+  color: #c9a24d;
+}
+
+.form {
+  background: #0d0d0d;
+  border: 1px solid #222;
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.form h2 {
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+
+input {
+  width: 100%;
+  background: #161616;
+  border: 1px solid #333;
+  color: white;
+  padding: 14px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+button {
+  width: 100%;
+  background: #c9a24d;
+  color: #050505;
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+button:active {
+  opacity: 0.8;
+}
+
+.progress-box {
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.progress-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #ddd;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 12px;
+  background: #222;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: #c9a24d;
+  transition: 0.3s;
+}
+
+.lista {
+  margin-bottom: 16px;
+}
+
+.item {
+  background: #101010;
+  border: 1px solid #222;
+  padding: 12px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.item small {
+  color: #999;
+}
+
+.item button {
+  width: auto;
+  padding: 8px 10px;
+  font-size: 12px;
+  background: #222;
+  color: white;
+}
+
+.danger {
+  background: #ff4d4d;
+  color: white;
+  margin-top: 10px;
+  margin-bottom: 40px;
+}
