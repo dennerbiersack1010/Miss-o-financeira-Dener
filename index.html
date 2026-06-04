@@ -4,196 +4,237 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Missão Financeira</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
   <div id="splashScreen" class="splash-screen">
-  <div class="splash-content">
-    <div class="splash-logo">MF</div>
-    <h1>Missão Financeira</h1>
-    <p>Controle. Progresso. Liberdade.</p>
-    <div class="splash-loader"></div>
+    <div class="splash-content">
+      <div class="splash-logo">MF</div>
+      <h1>Missão Financeira</h1>
+      <p>Controle. Progresso. Liberdade.</p>
+      <div class="splash-loader"></div>
+    </div>
   </div>
-</div>
 
   <div class="app">
 
-    <header class="top-header">
-      <button class="circle-btn">☰</button>
+    <header class="app-header">
+      <button class="header-btn" type="button">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
 
-      <div class="header-text">
-        <p>Olá, <strong>Dener!</strong></p>
+      <div class="header-copy">
+        <p>Olá, <strong>Dener.</strong></p>
         <h1>Missão Financeira</h1>
       </div>
 
-      <button class="circle-btn">◌</button>
+      <div class="avatar">D</div>
     </header>
 
-    <main>
+    <main class="main">
 
-      <!-- INÍCIO -->
       <section class="screen active" id="home">
-
         <div class="balance-card">
-          <div>
+          <div class="balance-copy">
             <span>Saldo disponível</span>
             <h2 id="saldoAtual">R$ 0,00</h2>
-            <p id="saldoStatus">Controle do mês</p>
+            <p id="saldoStatus">controle do mês</p>
           </div>
-          <div class="card-art">
-            <span>⚑</span>
+
+          <div class="balance-visual">
+            <div class="planet"></div>
+            <div class="orbit orbit-one"></div>
+            <div class="orbit orbit-two"></div>
           </div>
         </div>
 
-        <div class="summary-grid">
-          <div class="summary-card">
-            <span>Entradas</span>
-            <h3 id="totalGanhos">R$ 0,00</h3>
-            <div class="mini-line green-line"></div>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-head">
+              <span>Entradas</span>
+              <i class="trend up"></i>
+            </div>
+            <strong id="totalGanhos">R$ 0,00</strong>
+            <div class="sparkline positive"></div>
           </div>
 
-          <div class="summary-card">
-            <span>Saídas</span>
-            <h3 id="totalGastos">R$ 0,00</h3>
-            <div class="mini-line red-line"></div>
+          <div class="metric-card">
+            <div class="metric-head">
+              <span>Saídas</span>
+              <i class="trend down"></i>
+            </div>
+            <strong id="totalGastos">R$ 0,00</strong>
+            <div class="sparkline negative"></div>
           </div>
         </div>
 
         <div class="quick-actions">
-          <button onclick="openTab('transactions')">
-            <span>＋</span>
-            Adicionar<br>Ganho
+          <button type="button" onclick="openTab('transactions')">
+            <i class="action-icon plus"></i>
+            <span>Adicionar</span>
+            <strong>Ganho</strong>
           </button>
 
-          <button onclick="openTab('transactions')">
-            <span>−</span>
-            Adicionar<br>Gasto
+          <button type="button" onclick="openTab('transactions')">
+            <i class="action-icon minus"></i>
+            <span>Adicionar</span>
+            <strong>Gasto</strong>
           </button>
 
-          <button onclick="openTab('bills')">
-            <span>📄</span>
-            Nova<br>Conta
+          <button type="button" onclick="openTab('bills')">
+            <i class="action-icon file"></i>
+            <span>Nova</span>
+            <strong>Conta</strong>
           </button>
         </div>
 
-        <div class="panel">
+        <section class="panel">
           <div class="panel-head">
-            <h3>Panorama financeiro</h3>
+            <div>
+              <h3>Panorama financeiro</h3>
+              <p>Distribuição do seu mês</p>
+            </div>
             <span>Este mês</span>
           </div>
 
-          <div class="chart-area">
+          <div class="finance-chart">
             <div class="donut">
-              <div>
-                <strong id="donutTotal">R$ 0</strong>
+              <div class="donut-center">
+                <strong id="donutTotal">R$ 0,00</strong>
                 <small>Total</small>
               </div>
             </div>
 
-            <div class="legend">
-              <p><i class="dot yellow"></i> Ganhos <strong id="legendGanhos">0%</strong></p>
-              <p><i class="dot red"></i> Gastos <strong id="legendGastos">0%</strong></p>
-              <p><i class="dot green"></i> Saldo <strong id="legendSaldo">0%</strong></p>
+            <div class="chart-legend">
+              <div>
+                <span><i class="legend-dot gold"></i> Ganhos</span>
+                <strong id="legendGanhos">0%</strong>
+              </div>
+              <div>
+                <span><i class="legend-dot red"></i> Gastos</span>
+                <strong id="legendGastos">0%</strong>
+              </div>
+              <div>
+                <span><i class="legend-dot green"></i> Saldo</span>
+                <strong id="legendSaldo">0%</strong>
+              </div>
             </div>
           </div>
-        </div>
+        </section>
 
-        <div class="panel">
+        <section class="panel">
           <div class="panel-head">
-            <h3>Progresso da meta</h3>
+            <div>
+              <h3>Meta mensal</h3>
+              <p id="metaText">Defina uma meta para começar.</p>
+            </div>
             <span id="metaPercent">0%</span>
           </div>
 
-          <div class="progress-bar">
-            <div class="progress-fill gold" id="metaProgress"></div>
+          <div class="progress-track">
+            <div class="progress-fill gold-fill" id="metaProgress"></div>
           </div>
+        </section>
 
-          <p class="progress-text" id="metaText">Defina uma meta para começar.</p>
-        </div>
-
-        <div class="panel">
+        <section class="panel">
           <div class="panel-head">
-            <h3>Últimas movimentações</h3>
+            <div>
+              <h3>Últimas movimentações</h3>
+              <p>Histórico recente</p>
+            </div>
           </div>
-          <div class="list" id="ultimasMovimentacoes"></div>
-        </div>
 
+          <div class="list" id="ultimasMovimentacoes"></div>
+        </section>
       </section>
 
-      <!-- TRANSAÇÕES -->
       <section class="screen" id="transactions">
         <div class="page-title">
           <h2>Transações</h2>
-          <p>Registre ganhos e gastos.</p>
+          <p>Registre entradas e saídas com clareza.</p>
         </div>
 
         <div class="form-card">
           <h3>Adicionar ganho</h3>
           <input id="ganhoNome" type="text" placeholder="Nome do trabalho" />
           <input id="ganhoValor" type="number" placeholder="Valor recebido" />
-          <button onclick="adicionarGanho()">Salvar ganho</button>
+          <button type="button" onclick="adicionarGanho()">Salvar ganho</button>
         </div>
 
         <div class="form-card">
           <h3>Adicionar gasto</h3>
           <input id="gastoNome" type="text" placeholder="Nome do gasto" />
           <input id="gastoValor" type="number" placeholder="Valor gasto" />
-          <button onclick="adicionarGasto()" class="dark-btn">Salvar gasto</button>
+          <button type="button" class="secondary-btn" onclick="adicionarGasto()">Salvar gasto</button>
         </div>
 
-        <div class="panel">
+        <section class="panel">
           <div class="panel-head">
-            <h3>Histórico</h3>
+            <div>
+              <h3>Histórico</h3>
+              <p>Todos os registros</p>
+            </div>
           </div>
+
           <div class="list" id="listaTransacoes"></div>
-        </div>
+        </section>
       </section>
 
-      <!-- CONTAS -->
       <section class="screen" id="bills">
         <div class="page-title">
           <h2>Contas</h2>
-          <p>Controle o que falta pagar.</p>
+          <p>Acompanhe o que precisa ser pago.</p>
         </div>
 
-        <div class="goal-card">
+        <div class="goal-hero">
           <div>
             <span>Contas pendentes</span>
             <h2 id="contasPendentes">R$ 0,00</h2>
           </div>
-          <button onclick="openTab('bills')">＋</button>
+          <div class="goal-mark">+</div>
         </div>
 
-        <div class="panel">
+        <section class="panel">
           <div class="panel-head">
-            <h3>Trilha de contas</h3>
+            <div>
+              <h3>Trilha de contas</h3>
+              <p id="contasText">Nenhuma conta cadastrada.</p>
+            </div>
             <span id="contasPercent">0%</span>
           </div>
 
-          <div class="progress-bar">
-            <div class="progress-fill green" id="contasProgress"></div>
+          <div class="progress-track">
+            <div class="progress-fill green-fill" id="contasProgress"></div>
           </div>
-
-          <p class="progress-text" id="contasText">Nenhuma conta cadastrada.</p>
-        </div>
+        </section>
 
         <div class="form-card">
           <h3>Adicionar conta</h3>
           <input id="contaNome" type="text" placeholder="Nome da conta" />
           <input id="contaValor" type="number" placeholder="Valor da conta" />
-          <button onclick="adicionarConta()">Salvar conta</button>
+          <button type="button" onclick="adicionarConta()">Salvar conta</button>
         </div>
 
-        <div class="panel">
+        <section class="panel">
           <div class="panel-head">
-            <h3>Lista de contas</h3>
+            <div>
+              <h3>Lista de contas</h3>
+              <p>Pagas e pendentes</p>
+            </div>
           </div>
+
           <div class="list" id="listaContas"></div>
-        </div>
+        </section>
       </section>
 
-      <!-- METAS -->
       <section class="screen" id="goals">
         <div class="page-title">
           <h2>Minhas metas</h2>
@@ -203,57 +244,73 @@
         <div class="new-goal-card">
           <div>
             <h3>Nova meta</h3>
-            <p>Defina quanto precisa ganhar no mês.</p>
+            <p>Defina seu objetivo financeiro mensal.</p>
           </div>
-          <span>＋</span>
+          <div class="goal-mark">+</div>
         </div>
 
         <div class="form-card">
           <h3>Meta de ganhos</h3>
           <input id="metaInput" type="number" placeholder="Ex: 7000" />
-          <button onclick="salvarMeta()">Salvar meta</button>
+          <button type="button" onclick="salvarMeta()">Salvar meta</button>
         </div>
 
-        <div class="goal-list-card">
-          <div class="goal-icon">🎯</div>
+        <div class="goal-card">
+          <div class="goal-icon"></div>
           <div class="goal-content">
-            <h3>Meta mensal</h3>
-            <p id="goalMetaPercent">0%</p>
-            <div class="progress-bar">
-              <div class="progress-fill gold" id="goalMetaProgress"></div>
+            <div class="goal-title">
+              <h3>Meta mensal</h3>
+              <span id="goalMetaPercent">0%</span>
+            </div>
+
+            <div class="progress-track">
+              <div class="progress-fill gold-fill" id="goalMetaProgress"></div>
             </div>
 
             <div class="goal-info">
-              <span>Meta<br><strong id="metaAtual">R$ 0,00</strong></span>
-              <span>Ganho<br><strong id="metaGanho">R$ 0,00</strong></span>
-              <span>Falta<br><strong id="metaFalta">R$ 0,00</strong></span>
+              <div>
+                <span>Meta</span>
+                <strong id="metaAtual">R$ 0,00</strong>
+              </div>
+              <div>
+                <span>Ganho</span>
+                <strong id="metaGanho">R$ 0,00</strong>
+              </div>
+              <div>
+                <span>Falta</span>
+                <strong id="metaFalta">R$ 0,00</strong>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="goal-list-card">
-          <div class="goal-icon green-bg">🏠</div>
+        <div class="goal-card">
+          <div class="goal-icon green-icon"></div>
           <div class="goal-content">
-            <h3>Fechar mês no positivo</h3>
-            <p id="positivoStatus">0%</p>
-            <div class="progress-bar">
-              <div class="progress-fill green" id="positivoProgress"></div>
+            <div class="goal-title">
+              <h3>Fechar mês positivo</h3>
+              <span id="positivoStatus">0%</span>
+            </div>
+
+            <div class="progress-track">
+              <div class="progress-fill green-fill" id="positivoProgress"></div>
             </div>
           </div>
         </div>
-
       </section>
 
-      <!-- INSIGHTS -->
       <section class="screen" id="insights">
         <div class="page-title">
           <h2>Insights</h2>
-          <p>Resumo visual do seu dinheiro.</p>
+          <p>Leitura visual do seu dinheiro.</p>
         </div>
 
-        <div class="panel">
+        <section class="panel">
           <div class="panel-head">
-            <h3>Resumo do mês</h3>
+            <div>
+              <h3>Resumo do mês</h3>
+              <p>Principais indicadores</p>
+            </div>
           </div>
 
           <div class="insight-grid">
@@ -274,47 +331,50 @@
               <strong id="statusMes">Neutro</strong>
             </div>
           </div>
-        </div>
+        </section>
 
-        <div class="panel">
+        <section class="panel">
           <div class="panel-head">
-            <h3>Gráfico de movimento</h3>
+            <div>
+              <h3>Gráfico de movimento</h3>
+              <p>Comparativo visual</p>
+            </div>
           </div>
 
           <div class="bar-chart">
-            <div><span style="height: 40%"></span><small>Gastos</small></div>
-            <div><span style="height: 75%"></span><small>Ganhos</small></div>
-            <div><span style="height: 55%"></span><small>Saldo</small></div>
-            <div><span style="height: 30%"></span><small>Contas</small></div>
+            <div><span class="bar red-bar"></span><small>Gastos</small></div>
+            <div><span class="bar gold-bar"></span><small>Ganhos</small></div>
+            <div><span class="bar green-bar"></span><small>Saldo</small></div>
+            <div><span class="bar gray-bar"></span><small>Contas</small></div>
           </div>
-        </div>
+        </section>
 
-        <button class="danger-btn" onclick="apagarTudo()">Apagar todos os dados</button>
+        <button type="button" class="danger-btn" onclick="apagarTudo()">Apagar todos os dados</button>
       </section>
 
     </main>
 
     <nav class="bottom-nav">
-      <button class="nav-item active" onclick="openTab('home')">
-        <span>⌂</span>
-        <small>Início</small>
+      <button class="nav-item active" type="button" onclick="openTab('home', this)">
+        <i class="nav-icon home-icon"></i>
+        <span>Início</span>
       </button>
 
-      <button class="nav-item" onclick="openTab('transactions')">
-        <span>▤</span>
-        <small>Transações</small>
+      <button class="nav-item" type="button" onclick="openTab('transactions', this)">
+        <i class="nav-icon card-icon"></i>
+        <span>Transações</span>
       </button>
 
-      <button class="center-add" onclick="openTab('transactions')">＋</button>
+      <button class="center-action" type="button" onclick="openTab('transactions')">+</button>
 
-      <button class="nav-item" onclick="openTab('goals')">
-        <span>◎</span>
-        <small>Metas</small>
+      <button class="nav-item" type="button" onclick="openTab('goals', this)">
+        <i class="nav-icon target-icon"></i>
+        <span>Metas</span>
       </button>
 
-      <button class="nav-item" onclick="openTab('insights')">
-        <span>▥</span>
-        <small>Insights</small>
+      <button class="nav-item" type="button" onclick="openTab('insights', this)">
+        <i class="nav-icon chart-icon"></i>
+        <span>Insights</span>
       </button>
     </nav>
 
