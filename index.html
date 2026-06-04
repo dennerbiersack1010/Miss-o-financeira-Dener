@@ -1,1 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Missão Financeira</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
 
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="header-title">
+        <span class="header-icon">◈</span>
+        <span>Missão Financeira</span>
+      </div>
+      <button class="btn-reset" id="btnReset" title="Apagar todos os dados">⊘</button>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- SALDO CARD -->
+    <section class="card card-saldo">
+      <div class="card-label">Saldo Atual</div>
+      <div class="card-saldo-value" id="saldoAtual">R$ 0,00</div>
+      <div class="card-saldo-sub">
+        <span class="gain-label">↑ Ganhos: <strong id="totalGanhos">R$ 0,00</strong></span>
+        <span class="loss-label">↓ Gastos: <strong id="totalGastos">R$ 0,00</strong></span>
+      </div>
+    </section>
+
+    <!-- META MENSAL -->
+    <section class="card card-meta">
+      <div class="card-header-row">
+        <div>
+          <div class="card-label">Meta de Ganhos</div>
+          <div class="meta-value" id="metaValor">R$ 0,00</div>
+        </div>
+        <button class="btn-icon" id="btnEditMeta" title="Editar meta">✎</button>
+      </div>
+      <div class="progress-info">
+        <span id="metaFalta" class="meta-falta">Defina uma meta</span>
+        <span id="metaPercent" class="meta-percent">0%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-bar progress-gold" id="progressMeta" style="width:0%"></div>
+      </div>
+
+      <!-- Form meta inline -->
+      <div class="inline-form hidden" id="formMeta">
+        <input type="number" id="inputMeta" class="input" placeholder="Ex: 5000" min="0" step="0.01" />
+        <button class="btn btn-gold" id="btnSalvarMeta">Salvar</button>
+      </div>
+    </section>
+
+    <!-- CONTAS A PAGAR -->
+    <section class="card card-contas">
+      <div class="card-header-row">
+        <div>
+          <div class="card-label">Contas a Pagar</div>
+          <div class="contas-value" id="totalContasValor">R$ 0,00</div>
+        </div>
+        <button class="btn-icon btn-add" id="btnAddConta">+</button>
+      </div>
+      <div class="progress-info">
+        <span id="contasFalta" class="loss-label">R$ 0,00 pendentes</span>
+        <span id="contasPercent" class="meta-percent">0%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-bar progress-red" id="progressContas" style="width:0%"></div>
+      </div>
+
+      <!-- Form conta inline -->
+      <div class="inline-form hidden" id="formConta">
+        <input type="text" id="inputContaNome" class="input" placeholder="Nome da conta" />
+        <input type="number" id="inputContaValor" class="input" placeholder="Valor (R$)" min="0" step="0.01" />
+        <button class="btn btn-red" id="btnSalvarConta">Adicionar</button>
+      </div>
+
+      <div class="list" id="listContas"></div>
+    </section>
+
+    <!-- GANHOS -->
+    <section class="card">
+      <div class="card-header-row">
+        <div class="card-label gain-label">Ganhos</div>
+        <button class="btn-icon btn-add btn-green" id="btnAddGanho">+</button>
+      </div>
+
+      <!-- Form ganho inline -->
+      <div class="inline-form hidden" id="formGanho">
+        <input type="text" id="inputGanhoNome" class="input" placeholder="Descrição" />
+        <input type="number" id="inputGanhoValor" class="input" placeholder="Valor (R$)" min="0" step="0.01" />
+        <button class="btn btn-green" id="btnSalvarGanho">Adicionar</button>
+      </div>
+
+      <div class="list" id="listGanhos"></div>
+    </section>
+
+    <!-- GASTOS -->
+    <section class="card">
+      <div class="card-header-row">
+        <div class="card-label loss-label">Gastos</div>
+        <button class="btn-icon btn-add btn-red" id="btnAddGasto">+</button>
+      </div>
+
+      <!-- Form gasto inline -->
+      <div class="inline-form hidden" id="formGasto">
+        <input type="text" id="inputGastoNome" class="input" placeholder="Descrição" />
+        <input type="number" id="inputGastoValor" class="input" placeholder="Valor (R$)" min="0" step="0.01" />
+        <button class="btn btn-red" id="btnSalvarGasto">Adicionar</button>
+      </div>
+
+      <div class="list" id="listGastos"></div>
+    </section>
+
+  </main>
+
+  <!-- MODAL CONFIRMAÇÃO -->
+  <div class="modal-overlay hidden" id="modalOverlay">
+    <div class="modal">
+      <div class="modal-title">Apagar todos os dados?</div>
+      <div class="modal-sub">Essa ação não pode ser desfeita.</div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="btnCancelarReset">Cancelar</button>
+        <button class="btn btn-red" id="btnConfirmarReset">Apagar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast hidden" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
