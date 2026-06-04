@@ -1413,3 +1413,49 @@ input:focus {
   letter-spacing: -1.2px;
   line-height: 1;
 }
+
+/* HEADER FINAL — LOGO ESQUERDA / FOTO DIREITA */
+
+.clean-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+.brand-area {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 0;
+  max-width: none;
+  overflow: hidden;
+}
+
+.brand-logo {
+  width: 190px;
+  max-width: 72%;
+  height: auto;
+  max-height: 46px;
+  object-fit: contain;
+  display: block;
+}
+
+.avatar {
+  width: 56px;
+  height: 56px;
+  flex: 0 0 56px;
+  margin-left: auto;
+  margin-right: 0;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
