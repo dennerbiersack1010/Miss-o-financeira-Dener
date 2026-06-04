@@ -1459,3 +1459,53 @@ input:focus {
   height: 100%;
   object-fit: cover;
 }
+
+
+/* HEADER DEFINITIVO — LOGO ESQUERDA / FOTO CANTO DIREITO */
+
+.clean-header {
+  position: relative !important;
+  width: 100% !important;
+  height: 70px !important;
+  display: block !important;
+  margin-bottom: 22px !important;
+}
+
+.brand-area {
+  position: absolute !important;
+  left: 0 !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  display: flex !important;
+  align-items: center !important;
+  max-width: calc(100% - 82px) !important;
+  overflow: hidden !important;
+}
+
+.brand-logo {
+  width: 190px !important;
+  height: auto !important;
+  max-height: 52px !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+.avatar {
+  position: absolute !important;
+  right: 0 !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 58px !important;
+  height: 58px !important;
+  border-radius: 19px !important;
+  overflow: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.avatar img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+}
