@@ -1093,3 +1093,70 @@ input:focus {
     height: 82px;
   }
 }
+
+/* CORREÇÃO EMERGENCIAL DO HEADER */
+
+.app-header.clean-header {
+  width: 100% !important;
+  height: 72px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  margin-bottom: 24px !important;
+  overflow: hidden !important;
+  position: relative !important;
+}
+
+.brand-area {
+  width: auto !important;
+  max-width: 260px !important;
+  height: 72px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  overflow: hidden !important;
+  flex: 1 !important;
+}
+
+.brand-area img,
+.brand-logo {
+  width: 210px !important;
+  max-width: 210px !important;
+  height: auto !important;
+  max-height: 54px !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+.profile-area {
+  width: 58px !important;
+  height: 58px !important;
+  min-width: 58px !important;
+  max-width: 58px !important;
+  min-height: 58px !important;
+  max-height: 58px !important;
+  overflow: hidden !important;
+  border-radius: 19px !important;
+  flex: 0 0 58px !important;
+  margin-left: auto !important;
+  position: relative !important;
+}
+
+.profile-area img,
+.profile-photo {
+  width: 58px !important;
+  height: 58px !important;
+  min-width: 58px !important;
+  max-width: 58px !important;
+  min-height: 58px !important;
+  max-height: 58px !important;
+  object-fit: cover !important;
+  display: block !important;
+  border-radius: 19px !important;
+}
+
+/* impede qualquer imagem solta de estourar o app */
+.app img {
+  max-width: 100%;
+}
