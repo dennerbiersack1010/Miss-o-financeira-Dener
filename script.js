@@ -1,14 +1,30 @@
-let ganhos = JSON.parse(localStorage.getItem("ganhosMissao")) || [];
-let gastos = JSON.parse(localStorage.getItem("gastosMissao")) || [];
-let contas = JSON.parse(localStorage.getItem("contasMissao")) || [];
-let meta = Number(localStorage.getItem("metaMissao")) || 0;
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
-function salvarDados() {
-  localStorage.setItem("ganhosMissao", JSON.stringify(ganhos));
-  localStorage.setItem("gastosMissao", JSON.stringify(gastos));
-  localStorage.setItem("contasMissao", JSON.stringify(contas));
-  localStorage.setItem("metaMissao", String(meta));
-}
+const firebaseConfig = {
+  apiKey: "AIzaSyBFTV0O2H97bdc_R7izGs9cHxZa4EN31_A",
+  authDomain: "missao-financeira.firebaseapp.com",
+  projectId: "missao-financeira",
+  storageBucket: "missao-financeira.firebasestorage.app",
+  messagingSenderId: "326634668920",
+  appId: "1:326634668920:web:409e8cd90dea68a27f7e8d",
+  measurementId: "G-16EG9EJ4RQ"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const documentoRef = doc(db, "dadosFinanceiros", "dener");
+
+let ganhos = [];
+let gastos = [];
+let contas = [];
+let meta = 0;
 
 function moeda(valor) {
   return Number(valor || 0).toLocaleString("pt-BR", {
@@ -28,7 +44,51 @@ function escrever(id, texto) {
 
 function progresso(id, valor) {
   const elemento = pegar(id);
-  if (elemento) elemento.style.width = `${Math.max(0, Math.min(valor, 100))}%`;
+  if (elemento) {
+    elemento.style.width = `${Math.max(0, Math.min(valor, 100))}%`;
+  }
+}
+
+async function carregarDados() {
+  try {
+    const snapshot = await getDoc(documentoRef);
+
+    if (snapshot.exists()) {
+      const dados = snapshot.data();
+
+      ganhos = dados.ganhos || [];
+      gastos = dados.gastos || [];
+      contas = dados.contas || [];
+      meta = dados.meta || 0;
+    } else {
+      ganhos = JSON.parse(localStorage.getItem("ganhosMissao")) || [];
+      gastos = JSON.parse(localStorage.getItem("gastosMissao")) || [];
+      contas = JSON.parse(localStorage.getItem("contasMissao")) || [];
+      meta = Number(localStorage.getItem("metaMissao")) || 0;
+
+      await salvarDados();
+    }
+
+    atualizarTela();
+  } catch (erro) {
+    console.error("Erro ao carregar dados:", erro);
+    alert("Erro ao carregar dados do Firebase.");
+  }
+}
+
+async function salvarDados() {
+  try {
+    await setDoc(documentoRef, {
+      ganhos,
+      gastos,
+      contas,
+      meta,
+      atualizadoEm: new Date().toISOString()
+    });
+  } catch (erro) {
+    console.error("Erro ao salvar dados:", erro);
+    alert("Erro ao salvar no Firebase.");
+  }
 }
 
 function openTab(tab, botao = null) {
@@ -48,6 +108,8 @@ function openTab(tab, botao = null) {
     return;
   }
 
+  const navItems = document.querySelectorAll(".nav-item");
+
   const navMap = {
     home: 0,
     transactions: 1,
@@ -55,18 +117,14 @@ function openTab(tab, botao = null) {
     insights: 3
   };
 
-  const navItems = document.querySelectorAll(".nav-item");
-
-  if (tab === "bills") {
-    return;
-  }
+  if (tab === "bills") return;
 
   if (navItems[navMap[tab]]) {
     navItems[navMap[tab]].classList.add("active");
   }
 }
 
-function adicionarGanho() {
+async function adicionarGanho() {
   const nomeInput = pegar("ganhoNome");
   const valorInput = pegar("ganhoValor");
 
@@ -88,11 +146,11 @@ function adicionarGanho() {
   nomeInput.value = "";
   valorInput.value = "";
 
-  salvarDados();
+  await salvarDados();
   atualizarTela();
 }
 
-function adicionarGasto() {
+async function adicionarGasto() {
   const nomeInput = pegar("gastoNome");
   const valorInput = pegar("gastoValor");
 
@@ -114,11 +172,11 @@ function adicionarGasto() {
   nomeInput.value = "";
   valorInput.value = "";
 
-  salvarDados();
+  await salvarDados();
   atualizarTela();
 }
 
-function adicionarConta() {
+async function adicionarConta() {
   const nomeInput = pegar("contaNome");
   const valorInput = pegar("contaValor");
 
@@ -141,11 +199,11 @@ function adicionarConta() {
   nomeInput.value = "";
   valorInput.value = "";
 
-  salvarDados();
+  await salvarDados();
   atualizarTela();
 }
 
-function salvarMeta() {
+async function salvarMeta() {
   const metaInput = pegar("metaInput");
   const valor = metaInput ? Number(metaInput.value) : 0;
 
@@ -157,29 +215,29 @@ function salvarMeta() {
   meta = valor;
   metaInput.value = "";
 
-  salvarDados();
+  await salvarDados();
   atualizarTela();
 }
 
-function excluirGanho(id) {
+async function excluirGanho(id) {
   ganhos = ganhos.filter((item) => item.id !== id);
-  salvarDados();
+  await salvarDados();
   atualizarTela();
 }
 
-function excluirGasto(id) {
+async function excluirGasto(id) {
   gastos = gastos.filter((item) => item.id !== id);
-  salvarDados();
+  await salvarDados();
   atualizarTela();
 }
 
-function excluirConta(id) {
+async function excluirConta(id) {
   contas = contas.filter((item) => item.id !== id);
-  salvarDados();
+  await salvarDados();
   atualizarTela();
 }
 
-function marcarConta(id) {
+async function marcarConta(id) {
   contas = contas.map((conta) => {
     if (conta.id === id) {
       return {
@@ -191,11 +249,11 @@ function marcarConta(id) {
     return conta;
   });
 
-  salvarDados();
+  await salvarDados();
   atualizarTela();
 }
 
-function apagarTudo() {
+async function apagarTudo() {
   const confirmar = confirm("Tem certeza que deseja apagar todos os dados?");
 
   if (!confirmar) return;
@@ -205,7 +263,7 @@ function apagarTudo() {
   contas = [];
   meta = 0;
 
-  salvarDados();
+  await salvarDados();
   atualizarTela();
 }
 
@@ -247,6 +305,7 @@ function atualizarTela() {
   escrever("totalGastos", moeda(dados.totalGastos));
   escrever("contasPendentes", moeda(dados.totalContasPendentes));
   escrever("donutTotal", moeda(dados.totalGanhos + dados.totalGastos));
+
   escrever("metaPercent", `${Math.round(dados.progressoMeta)}%`);
   escrever("goalMetaPercent", `${Math.round(dados.progressoMeta)}%`);
   escrever("contasPercent", `${Math.round(dados.progressoContas)}%`);
@@ -277,17 +336,23 @@ function atualizarTela() {
 
   escrever(
     "legendGanhos",
-    totalMovimento > 0 ? `${Math.round((dados.totalGanhos / totalMovimento) * 100)}%` : "0%"
+    totalMovimento > 0
+      ? `${Math.round((dados.totalGanhos / totalMovimento) * 100)}%`
+      : "0%"
   );
 
   escrever(
     "legendGastos",
-    totalMovimento > 0 ? `${Math.round((dados.totalGastos / totalMovimento) * 100)}%` : "0%"
+    totalMovimento > 0
+      ? `${Math.round((dados.totalGastos / totalMovimento) * 100)}%`
+      : "0%"
   );
 
   escrever(
     "legendSaldo",
-    totalMovimento > 0 ? `${Math.round((Math.abs(dados.saldo) / totalMovimento) * 100)}%` : "0%"
+    totalMovimento > 0
+      ? `${Math.round((Math.abs(dados.saldo) / totalMovimento) * 100)}%`
+      : "0%"
   );
 
   const positivoPercent = dados.saldo > 0 ? 100 : dados.totalGanhos > 0 ? 45 : 0;
@@ -426,7 +491,18 @@ function iniciarSplash() {
   }, 1800);
 }
 
+window.openTab = openTab;
+window.adicionarGanho = adicionarGanho;
+window.adicionarGasto = adicionarGasto;
+window.adicionarConta = adicionarConta;
+window.salvarMeta = salvarMeta;
+window.excluirGanho = excluirGanho;
+window.excluirGasto = excluirGasto;
+window.excluirConta = excluirConta;
+window.marcarConta = marcarConta;
+window.apagarTudo = apagarTudo;
+
 document.addEventListener("DOMContentLoaded", () => {
-  atualizarTela();
   iniciarSplash();
+  carregarDados();
 });
