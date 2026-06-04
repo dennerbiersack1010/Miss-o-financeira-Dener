@@ -1,13 +1,13 @@
-let ganhos = JSON.parse(localStorage.getItem("ganhos")) || [];
-let gastos = JSON.parse(localStorage.getItem("gastos")) || [];
-let contas = JSON.parse(localStorage.getItem("contas")) || [];
-let meta = Number(localStorage.getItem("meta")) || 0;
+let ganhos = JSON.parse(localStorage.getItem("ganhosMissao")) || [];
+let gastos = JSON.parse(localStorage.getItem("gastosMissao")) || [];
+let contas = JSON.parse(localStorage.getItem("contasMissao")) || [];
+let meta = Number(localStorage.getItem("metaMissao")) || 0;
 
 function salvarDados() {
-  localStorage.setItem("ganhos", JSON.stringify(ganhos));
-  localStorage.setItem("gastos", JSON.stringify(gastos));
-  localStorage.setItem("contas", JSON.stringify(contas));
-  localStorage.setItem("meta", meta);
+  localStorage.setItem("ganhosMissao", JSON.stringify(ganhos));
+  localStorage.setItem("gastosMissao", JSON.stringify(gastos));
+  localStorage.setItem("contasMissao", JSON.stringify(contas));
+  localStorage.setItem("metaMissao", String(meta));
 }
 
 function moeda(valor) {
@@ -17,113 +17,130 @@ function moeda(valor) {
   });
 }
 
+function pegar(id) {
+  return document.getElementById(id);
+}
+
+function escrever(id, texto) {
+  const el = pegar(id);
+  if (el) el.textContent = texto;
+}
+
+function largura(id, valor) {
+  const el = pegar(id);
+  if (el) el.style.width = valor + "%";
+}
+
 function openTab(tab) {
   document.querySelectorAll(".screen").forEach(screen => {
     screen.classList.remove("active");
   });
 
-  document.getElementById(tab).classList.add("active");
+  const tela = pegar(tab);
+  if (tela) tela.classList.add("active");
 
   document.querySelectorAll(".nav-item").forEach(btn => {
     btn.classList.remove("active");
   });
-
-  const map = {
-    home: 0,
-    transactions: 1,
-    goals: 2,
-    insights: 3
-  };
-
-  if (tab === "home") document.querySelectorAll(".nav-item")[0].classList.add("active");
-  if (tab === "transactions") document.querySelectorAll(".nav-item")[1].classList.add("active");
-  if (tab === "goals") document.querySelectorAll(".nav-item")[2].classList.add("active");
-  if (tab === "insights") document.querySelectorAll(".nav-item")[3].classList.add("active");
 }
 
 function adicionarGanho() {
-  const nome = document.getElementById("ganhoNome").value.trim();
-  const valor = Number(document.getElementById("ganhoValor").value);
+  const nomeInput = pegar("ganhoNome");
+  const valorInput = pegar("ganhoValor");
 
-  if (!nome || !valor) {
+  const nome = nomeInput.value.trim();
+  const valor = Number(valorInput.value);
+
+  if (!nome || valor <= 0) {
     alert("Preencha o nome e o valor do ganho.");
     return;
   }
 
   ganhos.push({
     id: Date.now(),
-    nome,
-    valor,
+    nome: nome,
+    valor: valor,
     data: new Date().toLocaleDateString("pt-BR")
   });
 
-  document.getElementById("ganhoNome").value = "";
-  document.getElementById("ganhoValor").value = "";
+  nomeInput.value = "";
+  valorInput.value = "";
 
   salvarDados();
   atualizarTela();
+  alert("Ganho salvo!");
 }
 
 function adicionarGasto() {
-  const nome = document.getElementById("gastoNome").value.trim();
-  const valor = Number(document.getElementById("gastoValor").value);
+  const nomeInput = pegar("gastoNome");
+  const valorInput = pegar("gastoValor");
 
-  if (!nome || !valor) {
+  const nome = nomeInput.value.trim();
+  const valor = Number(valorInput.value);
+
+  if (!nome || valor <= 0) {
     alert("Preencha o nome e o valor do gasto.");
     return;
   }
 
   gastos.push({
     id: Date.now(),
-    nome,
-    valor,
+    nome: nome,
+    valor: valor,
     data: new Date().toLocaleDateString("pt-BR")
   });
 
-  document.getElementById("gastoNome").value = "";
-  document.getElementById("gastoValor").value = "";
+  nomeInput.value = "";
+  valorInput.value = "";
 
   salvarDados();
   atualizarTela();
+  alert("Gasto salvo!");
 }
 
 function adicionarConta() {
-  const nome = document.getElementById("contaNome").value.trim();
-  const valor = Number(document.getElementById("contaValor").value);
+  const nomeInput = pegar("contaNome");
+  const valorInput = pegar("contaValor");
 
-  if (!nome || !valor) {
+  const nome = nomeInput.value.trim();
+  const valor = Number(valorInput.value);
+
+  if (!nome || valor <= 0) {
     alert("Preencha o nome e o valor da conta.");
     return;
   }
 
   contas.push({
     id: Date.now(),
-    nome,
-    valor,
+    nome: nome,
+    valor: valor,
     paga: false,
     data: new Date().toLocaleDateString("pt-BR")
   });
 
-  document.getElementById("contaNome").value = "";
-  document.getElementById("contaValor").value = "";
+  nomeInput.value = "";
+  valorInput.value = "";
 
   salvarDados();
   atualizarTela();
+  alert("Conta salva!");
 }
 
 function salvarMeta() {
-  const valor = Number(document.getElementById("metaInput").value);
+  const metaInput = pegar("metaInput");
+  const valor = Number(metaInput.value);
 
-  if (!valor) {
-    alert("Digite o valor da meta.");
+  if (valor <= 0) {
+    alert("Digite uma meta válida.");
     return;
   }
 
   meta = valor;
-  document.getElementById("metaInput").value = "";
+  metaInput.value = "";
 
   salvarDados();
   atualizarTela();
+  alert("Meta salva!");
 }
 
 function excluirGanho(id) {
@@ -147,8 +164,12 @@ function excluirConta(id) {
 function marcarConta(id) {
   contas = contas.map(conta => {
     if (conta.id === id) {
-      conta.paga = !conta.paga;
+      return {
+        ...conta,
+        paga: !conta.paga
+      };
     }
+
     return conta;
   });
 
@@ -157,7 +178,9 @@ function marcarConta(id) {
 }
 
 function apagarTudo() {
-  if (!confirm("Tem certeza que deseja apagar todos os dados?")) return;
+  const confirmar = confirm("Tem certeza que deseja apagar todos os dados?");
+
+  if (!confirmar) return;
 
   ganhos = [];
   gastos = [];
@@ -169,174 +192,145 @@ function apagarTudo() {
 }
 
 function atualizarTela() {
-  const totalGanhos = ganhos.reduce((soma, item) => soma + item.valor, 0);
-  const totalGastos = gastos.reduce((soma, item) => soma + item.valor, 0);
-  const totalContasPendentes = contas
-    .filter(conta => !conta.paga)
-    .reduce((soma, item) => soma + item.valor, 0);
+  const totalGanhos = ganhos.reduce((soma, item) => soma + Number(item.valor), 0);
+  const totalGastos = gastos.reduce((soma, item) => soma + Number(item.valor), 0);
 
-  const totalContasPagas = contas
-    .filter(conta => conta.paga)
-    .reduce((soma, item) => soma + item.valor, 0);
+  const contasPagas = contas.filter(conta => conta.paga);
+  const contasPendentes = contas.filter(conta => !conta.paga);
+
+  const totalContasPagas = contasPagas.reduce((soma, item) => soma + Number(item.valor), 0);
+  const totalContasPendentes = contasPendentes.reduce((soma, item) => soma + Number(item.valor), 0);
 
   const saldo = totalGanhos - totalGastos - totalContasPagas;
   const faltaGanhar = Math.max(meta - totalGanhos, 0);
 
   const progressoMeta = meta > 0 ? Math.min((totalGanhos / meta) * 100, 100) : 0;
-  const progressoContas = contas.length > 0
-    ? (contas.filter(c => c.paga).length / contas.length) * 100
-    : 0;
+  const progressoContas = contas.length > 0 ? Math.round((contasPagas.length / contas.length) * 100) : 0;
 
-  document.getElementById("saldoAtual").textContent = moeda(saldo);
-  document.getElementById("totalGanhos").textContent = moeda(totalGanhos);
-  document.getElementById("totalGastos").textContent = moeda(totalGastos);
+  escrever("saldoAtual", moeda(saldo));
+  escrever("totalGanhos", moeda(totalGanhos));
+  escrever("totalGastos", moeda(totalGastos));
+  escrever("contasPendentes", moeda(totalContasPendentes));
+  escrever("donutTotal", moeda(totalGanhos + totalGastos));
+  escrever("metaPercent", Math.round(progressoMeta) + "%");
+  escrever("goalMetaPercent", Math.round(progressoMeta) + "%");
+  escrever("contasPercent", progressoContas + "%");
 
-  document.getElementById("donutTotal").textContent = moeda(totalGanhos + totalGastos);
-  document.getElementById("contasPendentes").textContent = moeda(totalContasPendentes);
+  largura("metaProgress", progressoMeta);
+  largura("goalMetaProgress", progressoMeta);
+  largura("contasProgress", progressoContas);
 
-  document.getElementById("metaProgress").style.width = progressoMeta + "%";
-  document.getElementById("goalMetaProgress").style.width = progressoMeta + "%";
-  document.getElementById("metaPercent").textContent = Math.round(progressoMeta) + "%";
-  document.getElementById("goalMetaPercent").textContent = Math.round(progressoMeta) + "%";
+  escrever("metaText", meta > 0 ? `Faltam ${moeda(faltaGanhar)} para bater sua meta.` : "Defina uma meta para começar.");
+  escrever("metaAtual", moeda(meta));
+  escrever("metaGanho", moeda(totalGanhos));
+  escrever("metaFalta", moeda(faltaGanhar));
 
-  document.getElementById("metaText").textContent =
-    meta > 0
-      ? `Faltam ${moeda(faltaGanhar)} para bater sua meta.`
-      : "Defina uma meta para começar.";
+  escrever("contasText", contas.length > 0 ? `${contasPagas.length} de ${contas.length} contas pagas.` : "Nenhuma conta cadastrada.");
 
-  document.getElementById("metaAtual").textContent = moeda(meta);
-  document.getElementById("metaGanho").textContent = moeda(totalGanhos);
-  document.getElementById("metaFalta").textContent = moeda(faltaGanhar);
+  escrever("maiorEntrada", moeda(ganhos.length ? Math.max(...ganhos.map(item => item.valor)) : 0));
+  escrever("maiorGasto", moeda(gastos.length ? Math.max(...gastos.map(item => item.valor)) : 0));
+  escrever("totalRegistros", ganhos.length + gastos.length + contas.length);
+  escrever("statusMes", saldo > 0 ? "Positivo" : saldo < 0 ? "Negativo" : "Neutro");
+  escrever("saldoStatus", saldo > 0 ? "+ mês positivo" : saldo < 0 ? "atenção ao saldo" : "controle do mês");
 
-  document.getElementById("contasProgress").style.width = progressoContas + "%";
-  document.getElementById("contasPercent").textContent = Math.round(progressoContas) + "%";
-  document.getElementById("contasText").textContent =
-    contas.length > 0
-      ? `${contas.filter(c => c.paga).length} de ${contas.length} contas pagas.`
-      : "Nenhuma conta cadastrada.";
-
-  const totalMovimento = totalGanhos + totalGastos + Math.abs(saldo);
-
-  document.getElementById("legendGanhos").textContent =
-    totalMovimento ? Math.round((totalGanhos / totalMovimento) * 100) + "%" : "0%";
-
-  document.getElementById("legendGastos").textContent =
-    totalMovimento ? Math.round((totalGastos / totalMovimento) * 100) + "%" : "0%";
-
-  document.getElementById("legendSaldo").textContent =
-    totalMovimento ? Math.round((Math.abs(saldo) / totalMovimento) * 100) + "%" : "0%";
-
-  const positivoPercent = saldo > 0 ? 100 : 20;
-  document.getElementById("positivoProgress").style.width = positivoPercent + "%";
-  document.getElementById("positivoStatus").textContent =
-    saldo > 0 ? "100%" : "Em andamento";
-
-  document.getElementById("maiorEntrada").textContent = moeda(
-    ganhos.length ? Math.max(...ganhos.map(g => g.valor)) : 0
-  );
-
-  document.getElementById("maiorGasto").textContent = moeda(
-    gastos.length ? Math.max(...gastos.map(g => g.valor)) : 0
-  );
-
-  document.getElementById("totalRegistros").textContent =
-    ganhos.length + gastos.length + contas.length;
-
-  document.getElementById("statusMes").textContent =
-    saldo > 0 ? "Positivo" : saldo < 0 ? "Negativo" : "Neutro";
-
-  document.getElementById("saldoStatus").textContent =
-    saldo > 0 ? "+ mês positivo" : saldo < 0 ? "atenção ao saldo" : "controle do mês";
-
-  renderizarListas();
+  atualizarListas();
 }
 
-function renderizarListas() {
-  const listaTransacoes = document.getElementById("listaTransacoes");
-  const ultimas = document.getElementById("ultimasMovimentacoes");
-  const listaContas = document.getElementById("listaContas");
+function atualizarListas() {
+  const listaTransacoes = pegar("listaTransacoes");
+  const ultimasMovimentacoes = pegar("ultimasMovimentacoes");
+  const listaContas = pegar("listaContas");
 
   const transacoes = [
-    ...ganhos.map(g => ({ ...g, tipo: "ganho" })),
-    ...gastos.map(g => ({ ...g, tipo: "gasto" }))
+    ...ganhos.map(item => ({ ...item, tipo: "ganho" })),
+    ...gastos.map(item => ({ ...item, tipo: "gasto" }))
   ].sort((a, b) => b.id - a.id);
 
-  listaTransacoes.innerHTML = "";
-  ultimas.innerHTML = "";
+  if (listaTransacoes) {
+    if (transacoes.length === 0) {
+      listaTransacoes.innerHTML = `<p class="empty">Nenhuma transação cadastrada.</p>`;
+    } else {
+      listaTransacoes.innerHTML = transacoes.map(item => {
+        const positivo = item.tipo === "ganho";
+        const classe = positivo ? "green-text" : "red-text";
+        const sinal = positivo ? "+" : "-";
+        const funcao = positivo ? "excluirGanho" : "excluirGasto";
 
-  if (transacoes.length === 0) {
-    listaTransacoes.innerHTML = `<p class="empty">Nenhuma transação cadastrada.</p>`;
-    ultimas.innerHTML = `<p class="empty">Nenhuma movimentação ainda.</p>`;
-  } else {
-    transacoes.forEach(item => {
-      listaTransacoes.innerHTML += `
-        <div class="item">
-          <div class="item-left">
-            <div class="item-icon">${item.tipo === "ganho" ? "↑" : "↓"}</div>
+        return `
+          <div class="item">
+            <div class="item-left">
+              <div class="item-icon">${positivo ? "↑" : "↓"}</div>
+              <div>
+                <h4>${item.nome}</h4>
+                <small>${positivo ? "Ganho" : "Gasto"} • ${item.data}</small>
+              </div>
+            </div>
+
             <div>
-              <h4>${item.nome}</h4>
-              <small>${item.tipo === "ganho" ? "Ganho" : "Gasto"} • ${item.data}</small>
+              <strong class="${classe}">${sinal} ${moeda(item.valor)}</strong>
+              <div class="item-actions">
+                <button onclick="${funcao}(${item.id})">Excluir</button>
+              </div>
             </div>
           </div>
-
-          <div>
-            <strong class="${item.tipo === "ganho" ? "green-text" : "red-text"}">
-              ${item.tipo === "ganho" ? "+" : "-"} ${moeda(item.valor)}
-            </strong>
-
-            <div class="item-actions">
-              <button onclick="${item.tipo === "ganho" ? `excluirGanho(${item.id})` : `excluirGasto(${item.id})`}">Excluir</button>
-            </div>
-          </div>
-        </div>
-      `;
-    });
-
-    transacoes.slice(0, 4).forEach(item => {
-      ultimas.innerHTML += `
-        <div class="item">
-          <div class="item-left">
-            <div class="item-icon">${item.tipo === "ganho" ? "↑" : "↓"}</div>
-            <div>
-              <h4>${item.nome}</h4>
-              <small>${item.tipo === "ganho" ? "Ganho" : "Gasto"}</small>
-            </div>
-          </div>
-          <strong class="${item.tipo === "ganho" ? "green-text" : "red-text"}">
-            ${item.tipo === "ganho" ? "+" : "-"} ${moeda(item.valor)}
-          </strong>
-        </div>
-      `;
-    });
+        `;
+      }).join("");
+    }
   }
 
-  listaContas.innerHTML = "";
+  if (ultimasMovimentacoes) {
+    if (transacoes.length === 0) {
+      ultimasMovimentacoes.innerHTML = `<p class="empty">Nenhuma movimentação ainda.</p>`;
+    } else {
+      ultimasMovimentacoes.innerHTML = transacoes.slice(0, 4).map(item => {
+        const positivo = item.tipo === "ganho";
+        const classe = positivo ? "green-text" : "red-text";
+        const sinal = positivo ? "+" : "-";
 
-  if (contas.length === 0) {
-    listaContas.innerHTML = `<p class="empty">Nenhuma conta cadastrada.</p>`;
-  } else {
-    contas.forEach(conta => {
-      listaContas.innerHTML += `
-        <div class="item">
-          <div class="item-left">
-            <div class="item-icon">${conta.paga ? "✓" : "!"}</div>
+        return `
+          <div class="item">
+            <div class="item-left">
+              <div class="item-icon">${positivo ? "↑" : "↓"}</div>
+              <div>
+                <h4>${item.nome}</h4>
+                <small>${positivo ? "Ganho" : "Gasto"}</small>
+              </div>
+            </div>
+
+            <strong class="${classe}">${sinal} ${moeda(item.valor)}</strong>
+          </div>
+        `;
+      }).join("");
+    }
+  }
+
+  if (listaContas) {
+    if (contas.length === 0) {
+      listaContas.innerHTML = `<p class="empty">Nenhuma conta cadastrada.</p>`;
+    } else {
+      listaContas.innerHTML = contas.map(conta => {
+        return `
+          <div class="item">
+            <div class="item-left">
+              <div class="item-icon">${conta.paga ? "✓" : "!"}</div>
+              <div>
+                <h4>${conta.nome}</h4>
+                <small>${conta.paga ? "Paga" : "Pendente"} • ${conta.data}</small>
+              </div>
+            </div>
+
             <div>
-              <h4>${conta.nome}</h4>
-              <small>${conta.paga ? "Paga" : "Pendente"} • ${conta.data}</small>
+              <strong>${moeda(conta.valor)}</strong>
+              <div class="item-actions">
+                <button onclick="marcarConta(${conta.id})">${conta.paga ? "Reabrir" : "Pagar"}</button>
+                <button onclick="excluirConta(${conta.id})">Excluir</button>
+              </div>
             </div>
           </div>
-
-          <div>
-            <strong>${moeda(conta.valor)}</strong>
-            <div class="item-actions">
-              <button onclick="marcarConta(${conta.id})">${conta.paga ? "Reabrir" : "Pagar"}</button>
-              <button onclick="excluirConta(${conta.id})">Excluir</button>
-            </div>
-          </div>
-        </div>
-      `;
-    });
+        `;
+      }).join("");
+    }
   }
 }
 
-atualizarTela();
+document.addEventListener("DOMContentLoaded", atualizarTela);
