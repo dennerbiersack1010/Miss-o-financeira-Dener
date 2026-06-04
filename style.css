@@ -1364,3 +1364,52 @@ input:focus {
   margin: 0 auto 26px;
   object-fit: contain;
 }
+
+/* AJUSTES FINOS HEADER + SALDO */
+
+.clean-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+.brand-area {
+  flex: 1;
+  max-width: calc(100% - 74px);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.brand-logo {
+  width: 185px;
+  max-width: 100%;
+  height: auto;
+  max-height: 48px;
+  object-fit: contain;
+  display: block;
+}
+
+.avatar {
+  width: 54px;
+  height: 54px;
+  flex: 0 0 54px;
+  margin-left: auto;
+  margin-right: 0;
+  border-radius: 18px;
+}
+
+/* Corrige o valor negativo quebrando linha */
+
+.balance-copy {
+  max-width: 76%;
+}
+
+.balance-copy h2 {
+  white-space: nowrap;
+  font-size: 32px;
+  letter-spacing: -1.2px;
+  line-height: 1;
+}
