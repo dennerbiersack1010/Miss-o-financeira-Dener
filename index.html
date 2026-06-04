@@ -7,46 +7,44 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
+  <!-- SPLASH SCREEN -->
   <div id="splashScreen" class="splash-screen">
-  <div class="splash-content">
-    <img src="assets/logo1-missao.png.PNG.png" alt="Missão Financeira" class="splash-logo-img">
-    <p>Controle. Progresso. Liberdade.</p>
-    <div class="splash-loader"></div>
+    <div class="splash-content">
+      <img src="assets/logo1-missao.png.PNG.png" alt="Missão Financeira" class="splash-logo-img">
+      <p>Controle. Progresso. Liberdade.</p>
+      <div class="splash-loader"></div>
+    </div>
   </div>
-</div>
-  
+
   <div class="app">
 
-   <header class="app-header clean-header">
-  <div class="brand-area">
-    <img src="assets/logo1-missao.png.PNG.png" alt="Missão Financeira" class="brand-logo">
-  </div>
+    <!-- HEADER CORRIGIDO -->
+    <header class="app-header clean-header">
+      <div class="brand-area">
+        <img src="assets/logo1-missao.png.PNG.png" alt="Missão Financeira" class="brand-logo">
+      </div>
 
-  <div class="profile-area">
-    <img src="assets/avatar-dener.jpg.JPG.JPEG" alt="Foto de perfil" class="profile-photo">
-  </div>
-</header>
-    
+      <div class="profile-area">
+        <img src="assets/avatar-dener.jpg.JPG.JPEG" alt="Foto de perfil" class="profile-photo">
+      </div>
+    </header>
+
     <main class="main">
 
+      <!-- INÍCIO -->
       <section class="screen active" id="home">
+
         <div class="balance-card">
           <div class="balance-copy">
             <span>Saldo disponível</span>
             <h2 id="saldoAtual">R$ 0,00</h2>
             <p id="saldoStatus">controle do mês</p>
-          </div>
-
-          <div class="balance-visual">
-            <div class="planet"></div>
-            <div class="orbit orbit-one"></div>
-            <div class="orbit orbit-two"></div>
           </div>
         </div>
 
@@ -112,10 +110,12 @@
                 <span><i class="legend-dot gold"></i> Ganhos</span>
                 <strong id="legendGanhos">0%</strong>
               </div>
+
               <div>
                 <span><i class="legend-dot red"></i> Gastos</span>
                 <strong id="legendGastos">0%</strong>
               </div>
+
               <div>
                 <span><i class="legend-dot green"></i> Saldo</span>
                 <strong id="legendSaldo">0%</strong>
@@ -148,8 +148,10 @@
 
           <div class="list" id="ultimasMovimentacoes"></div>
         </section>
+
       </section>
 
+      <!-- TRANSAÇÕES -->
       <section class="screen" id="transactions">
         <div class="page-title">
           <h2>Transações</h2>
@@ -182,6 +184,7 @@
         </section>
       </section>
 
+      <!-- CONTAS -->
       <section class="screen" id="bills">
         <div class="page-title">
           <h2>Contas</h2>
@@ -229,6 +232,7 @@
         </section>
       </section>
 
+      <!-- METAS -->
       <section class="screen" id="goals">
         <div class="page-title">
           <h2>Minhas metas</h2>
@@ -251,6 +255,7 @@
 
         <div class="goal-card">
           <div class="goal-icon"></div>
+
           <div class="goal-content">
             <div class="goal-title">
               <h3>Meta mensal</h3>
@@ -266,10 +271,12 @@
                 <span>Meta</span>
                 <strong id="metaAtual">R$ 0,00</strong>
               </div>
+
               <div>
                 <span>Ganho</span>
                 <strong id="metaGanho">R$ 0,00</strong>
               </div>
+
               <div>
                 <span>Falta</span>
                 <strong id="metaFalta">R$ 0,00</strong>
@@ -280,6 +287,7 @@
 
         <div class="goal-card">
           <div class="goal-icon green-icon"></div>
+
           <div class="goal-content">
             <div class="goal-title">
               <h3>Fechar mês positivo</h3>
@@ -293,6 +301,7 @@
         </div>
       </section>
 
+      <!-- INSIGHTS -->
       <section class="screen" id="insights">
         <div class="page-title">
           <h2>Insights</h2>
@@ -312,14 +321,17 @@
               <span>Maior entrada</span>
               <strong id="maiorEntrada">R$ 0,00</strong>
             </div>
+
             <div>
               <span>Maior gasto</span>
               <strong id="maiorGasto">R$ 0,00</strong>
             </div>
+
             <div>
               <span>Registros</span>
               <strong id="totalRegistros">0</strong>
             </div>
+
             <div>
               <span>Status</span>
               <strong id="statusMes">Neutro</strong>
@@ -336,10 +348,25 @@
           </div>
 
           <div class="bar-chart">
-            <div><span class="bar red-bar"></span><small>Gastos</small></div>
-            <div><span class="bar gold-bar"></span><small>Ganhos</small></div>
-            <div><span class="bar green-bar"></span><small>Saldo</small></div>
-            <div><span class="bar gray-bar"></span><small>Contas</small></div>
+            <div>
+              <span class="bar red-bar"></span>
+              <small>Gastos</small>
+            </div>
+
+            <div>
+              <span class="bar gold-bar"></span>
+              <small>Ganhos</small>
+            </div>
+
+            <div>
+              <span class="bar green-bar"></span>
+              <small>Saldo</small>
+            </div>
+
+            <div>
+              <span class="bar gray-bar"></span>
+              <small>Contas</small>
+            </div>
           </div>
         </section>
 
@@ -348,6 +375,7 @@
 
     </main>
 
+    <!-- MENU INFERIOR -->
     <nav class="bottom-nav">
       <button class="nav-item active" type="button" onclick="openTab('home', this)">
         <i class="nav-icon home-icon"></i>
