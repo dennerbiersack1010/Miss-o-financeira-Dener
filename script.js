@@ -334,3 +334,14 @@ function atualizarListas() {
 }
 
 document.addEventListener("DOMContentLoaded", atualizarTela);
+
+
+window.addEventListener("load", function () {
+  const splash = document.getElementById("splashScreen");
+
+  setTimeout(function () {
+    if (splash) {
+      splash.classList.add("hide");
+    }
+  }, 2200);
+});
